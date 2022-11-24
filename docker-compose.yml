@@ -4,11 +4,13 @@ services:
         image: nginx:latest
         restart: always
         volumes:
-            - ./src/nginx/nginx.conf:/etc/nginx/nginx.conf
+            - ./src/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
             - ./src/nginx/src:/usr/share/nginx/html
         ports:
             - 80:80
             - 443:443
+        depends_on:
+            - express-api
 
     express-api:
         image: express-api

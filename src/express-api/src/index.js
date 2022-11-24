@@ -8,7 +8,11 @@ const config = {
 const app = express();
 
 app.get("/", (req, res) => {
-	res.status(200).send("Hello from Express!");
+	const data = [
+		{ name: "James", age: 22 },
+		{ name: "John", age: 25 },
+	];
+	res.status(200).type("application/json").send(data);
 });
 
 app.listen(config.port, config.host, (e) => {

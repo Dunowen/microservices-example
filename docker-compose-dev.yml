@@ -1,0 +1,27 @@
+version: "3"
+services:
+    #the container is called nginx, because it's not the same as running the frontend in prod mode
+    nginx:
+        image: nginx:latest
+        restart: always
+        volumes:
+            - ./src/frontend/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+            - ./src/frontend/dist:/usr/share/nginx/html
+        ports:
+            - 80:80
+            - 443:443
+        depends_on:
+            - express-api
+
+    #frontend:
+        # The frontend is not needed for running docker compose dev
+        # because running the dev server outside of docker proxies the API calls to nginx
+
+    express-api:
+        image: express-api
+        build:
+            context: ./src/express-api
+            dockerfile: Dockerfile-dev
+        restart: always
+        volumes:
+            - ./src/express-api:/usr/src/app

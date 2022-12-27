@@ -1,0 +1,60 @@
+# frontend
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  selector:
+    matchLabels:
+      app: frontend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: "dunowen/frontend:latest"
+          imagePullPolicy: "Always"
+          ports:
+            - name: http
+              containerPort: 80
+          resources:
+            limits:
+              memory: 512Mi
+              cpu: "1"
+            requests:
+              memory: 256Mi
+              cpu: "0.2"
+
+--- 
+# express-api
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: express-api
+spec:
+  selector:
+    matchLabels:
+      app: express-api
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: express-api
+    spec:
+      containers:
+        - name: express-api
+          image: "dunowen/express-api:latest"
+          imagePullPolicy: "Always"
+          ports:
+            - name: http
+              containerPort: 3000
+          resources:
+            limits:
+              memory: 512Mi
+              cpu: "1"
+            requests:
+              memory: 256Mi
+              cpu: "0.2"

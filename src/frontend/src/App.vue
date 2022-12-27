@@ -3,9 +3,15 @@
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
 import { ref } from "vue";
 
+const deepValues = ref();
 const values = ref();
 
 fetch("api/express/deep/url")
+	.then((response) => response.json())
+	.then((data) => {
+		deepValues.value = data;
+	});
+fetch("api/express")
 	.then((response) => response.json())
 	.then((data) => {
 		values.value = data;
@@ -15,16 +21,18 @@ fetch("api/express/deep/url")
 <template>
 	<div>
 		<a href="https://vitejs.dev" target="_blank">
-			<img src="/vite.svg" class="logo" alt="Vite logo" />
+			<img src="/vite.svg" class="logo" alt="Vite logo 2" />
 		</a>
 		<a href="https://vuejs.org/" target="_blank">
 			<img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
 		</a>
 	</div>
 	<pre>
+   {{ deepValues }}
+  	</pre>
+	<pre>
    {{ values }}
-  	</pre
-	>
+  	</pre>
 </template>
 
 <style scoped>
